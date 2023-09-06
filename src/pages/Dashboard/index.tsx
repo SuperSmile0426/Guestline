@@ -2,10 +2,14 @@ import React from "react";
 
 import { DashboardContainer } from "containers";
 
-export const DashboardPage: React.FC = () => {
+import { WithLayout } from "components/common";
+
+const Dashboard: React.FC = () => {
   return (
     <div>
       <DashboardContainer />
     </div>
   )
 }
+
+export const DashboardPage = WithLayout(Dashboard);
