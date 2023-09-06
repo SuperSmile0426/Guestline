@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "redux/store";
 
 import { IHotel } from "models";
 
@@ -6,10 +8,15 @@ import { DashboardViewStyle } from "./index.style";
 
 import { ControlBarComponent, CardComponent, LoaderComponent } from "components/common";
 
-export const DashboardView: React.FC = () => {
+type DashboardViewProps = {
+  hotels: IHotel[],
+};
+
+export const DashboardView: React.FC<DashboardViewProps> = ({ hotels }) => {
   const [rating, setRating] = React.useState<number>(0);
   const [adult, setAdult] = React.useState<number>(0);
   const [children, setChildren] = React.useState<number>(0);
+  const loading = useSelector((state: RootState) => state.loading.status);
 
   const setRatingHandler = (value: number) => {
     setRating(value);
@@ -23,31 +30,30 @@ export const DashboardView: React.FC = () => {
     setChildren(value);
   }
 
-  const mockUpHotelData: IHotel = {
-    id: "OBMNG1",
-    name: "DBM Hotel 1",
-    address1: "Cajarc Blue Hotel",
-    address2: "51 Bedford St",
-    starRating: "4",
-    images: [
-      {
-        "url": "https://uk2-roomlynx.eu.guestline.net/picturemanager/images/OBMNG1/282214329.jpeg"
-      },
-      {
-          "url": "https://uk2-roomlynx.eu.guestline.net/picturemanager/images/OBMNG1/london-hotels-with-a-view-1614348818.jpeg"
-      },
-      {
-          "url": "https://uk2-roomlynx.eu.guestline.net/picturemanager/images/OBMNG1/Hotel1.JPG"
-      }
-    ]
-  }
-  return(
+  return (
     <DashboardViewStyle>
       <div className="controlbar-container">
         <ControlBarComponent setRating={setRatingHandler} setAdult={setAdultHandler} setChildren={setChildrenHandler} />
       </div>
+      {
+        !!loading.length && <LoaderComponent />
+      }
       <div className="content-container">
-        <CardComponent hotels={mockUpHotelData} />
+        {
+          hotels.map((hotel, index) => {
+            return (
+              <div key={index}>
+                {
+                  Number(hotel.starRating) >= rating ? (
+                    <CardComponent hotels={hotels[index]} />
+                  ) : (
+                    <div></div>
+                  )
+                }
+              </div>
+            )
+          })
+        }
       </div>
     </DashboardViewStyle>
   )
