@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "@mui/material";
+import { Theme } from "@mui/material/styles";
 
-function App() {
+import { PATH } from "./consts";
+import { DashboardPage } from "pages";
+
+import { defaultTheme } from "assets";
+
+export const App: React.FC = () => {
+  const theme: Theme = defaultTheme;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ThemeProvider theme={theme}>
+      <Routes>
+        <Route path={PATH.INDEX} element={<DashboardPage />} />
+      </Routes>
+    </ThemeProvider>
+  )
 }
-
-export default App;
