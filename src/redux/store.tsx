@@ -1,6 +1,8 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import createSagaMiddlware from "redux-saga";
 
+import rootSaga from "./sagas";
+
 import {
   loadingReducer,
   loadingActions,
@@ -32,6 +34,10 @@ export const AppActions = {
   hotel: hotelActions,
   room: roomActions,
 };
+
+sagaMiddleware.run(rootSaga);
+
+export * as AppActionTypes from "./types";
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
