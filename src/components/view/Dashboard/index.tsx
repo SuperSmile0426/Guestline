@@ -45,7 +45,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ hotels }) => {
               <div key={index}>
                 {
                   Number(hotel.starRating) >= rating ? (
-                    <CardComponent hotels={hotels[index]} />
+                    <CardComponent hotels={hotels[index]} index={index} key={index} adult={adult} children={children} />
                   ) : (
                     <div></div>
                   )
