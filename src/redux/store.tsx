@@ -4,10 +4,16 @@ import createSagaMiddlware from "redux-saga";
 import {
   loadingReducer,
   loadingActions,
+  hotelReducer,
+  hotelActions,
+  roomReducer,
+  roomActions,
 } from "./slices";
 
 const reducer = combineReducers({
   loading: loadingReducer,
+  hotel: hotelReducer,
+  room: roomReducer,
 });
 
 const sagaMiddleware = createSagaMiddlware();
@@ -23,6 +29,8 @@ export const store = configureStore({
 
 export const AppActions = {
   loading: loadingActions,
+  hotel: hotelActions,
+  room: roomActions,
 };
 
 export type RootState = ReturnType<typeof store.getState>;
